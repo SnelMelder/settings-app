@@ -11,7 +11,7 @@
   "dependencies": {
     "@azure/msal-browser": "^2.31.0",
     "@azure/msal-react": "^1.4.10",
-    "@fluentui/react": "^8.102.0",
+    "@fluentui/react": "^8.103.2",
     "msal": "^1.4.17",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

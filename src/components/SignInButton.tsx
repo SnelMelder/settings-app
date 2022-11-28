@@ -1,3 +1,4 @@
+import { PrimaryButton } from "@fluentui/react";
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../../authConfig";
 
@@ -9,7 +10,7 @@ export const SignInButton = () => {
 
   const handleLogin = () => instance.loginRedirect(loginRequest);
 
-  return <button onClick={handleLogin}>Sign in using Redirect</button>;
+  return <PrimaryButton text="Inloggen" onClick={handleLogin} type="none" />;
 };
 
 export default SignInButton;
