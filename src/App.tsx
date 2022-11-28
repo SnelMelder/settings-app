@@ -1,15 +1,22 @@
-import { useIsAuthenticated } from "@azure/msal-react";
-import SignInButton from "./components/SignInButton";
-import { SignOutButton } from "./components/SignOutButton";
+import {
+  AuthenticatedTemplate,
+  UnauthenticatedTemplate,
+} from "@azure/msal-react";
+
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
-  const isAuthenticated = useIsAuthenticated();
-
-  if (isAuthenticated) {
-    return <SignOutButton />;
-  } else {
-    return <SignInButton />;
-  }
+  return (
+    <>
+      <AuthenticatedTemplate>
+        <HomePage />
+      </AuthenticatedTemplate>
+      <UnauthenticatedTemplate>
+        <LoginPage />
+      </UnauthenticatedTemplate>
+    </>
+  );
 }
 
 export default App;

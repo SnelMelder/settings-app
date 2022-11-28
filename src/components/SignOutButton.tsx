@@ -12,5 +12,9 @@ export const SignOutButton = () => {
     });
   };
 
-  return <button onClick={handleLogout}>Sign out using Redirect</button>;
+  return (
+    <a className="underline cursor-pointer" onClick={handleLogout}>
+      Uitloggen
+    </a>
+  );
 };
