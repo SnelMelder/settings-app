@@ -1,1 +1,0 @@
-const promptSignIn = () => instance.loginRedirect(loginRequest);

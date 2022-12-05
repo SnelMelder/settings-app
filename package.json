@@ -11,10 +11,14 @@
   "dependencies": {
     "@azure/msal-browser": "^2.31.0",
     "@azure/msal-react": "^1.4.10",
+    "@fluentui/example-data": "^8.4.3",
     "@fluentui/react": "^8.103.2",
+    "@types/uuid": "^9.0.0",
+    "axios": "^1.2.0",
     "msal": "^1.4.17",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",
