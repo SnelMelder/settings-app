@@ -3,6 +3,7 @@ import {
   IBasePickerSuggestionsProps,
   NormalPeoplePicker,
 } from "@fluentui/react/lib/Pickers";
+import { useEffect } from "react";
 
 const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: "Voorgestelde Personen",
@@ -14,9 +15,10 @@ const suggestionProps: IBasePickerSuggestionsProps = {
 interface Props {
   onChange: (items?: IPersonaProps[] | undefined) => void;
   people: IPersonaProps[];
+  selectedPeople: IPersonaProps[];
 }
 
-export const PeoplePicker = ({ people, onChange }: Props) => {
+export const PeoplePicker = ({ people, onChange, selectedPeople }: Props) => {
   const onFilterChanged = (
     filterText: string,
     currentPersonas?: IPersonaProps[],
@@ -54,6 +56,10 @@ export const PeoplePicker = ({ people, onChange }: Props) => {
     );
   };
 
+  useEffect(() => {
+    console.log(selectedPeople);
+  }, [selectedPeople]);
+
   return (
     <NormalPeoplePicker
       onResolveSuggestions={onFilterChanged}
@@ -62,6 +68,7 @@ export const PeoplePicker = ({ people, onChange }: Props) => {
       pickerSuggestionsProps={suggestionProps}
       className={"ms-PeoplePicker"}
       onChange={onChange}
+      selectedItems={selectedPeople}
     />
   );
 };

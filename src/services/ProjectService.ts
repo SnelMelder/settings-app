@@ -36,6 +36,19 @@ export async function createProject(dto: ProjectCreateDto) {
 
     return project;
   } catch (e) {
-    console.log(e);
+    throw e;
   }
+}
+
+export async function deleteProject(projectId: string) {
+  console.log("Deleting project...");
+  return;
+}
+
+export async function updateProject(dto: ProjectUpdateDto) {
+  const allContractors = await getAllContractors();
+  const contractorsForProject = allContractors.filter((contractor) =>
+    dto.contractorIDs.includes(contractor.key)
+  );
+  return new Project(dto.id, dto.name, contractorsForProject);
 }
