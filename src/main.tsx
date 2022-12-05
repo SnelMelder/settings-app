@@ -12,9 +12,7 @@ const msalInstance = new PublicClientApplication(msalConfig);
 initializeIcons();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <MsalProvider instance={msalInstance}>
-      <App />
-    </MsalProvider>
-  </React.StrictMode>
+  <MsalProvider instance={msalInstance}>
+    <App />
+  </MsalProvider>
 );

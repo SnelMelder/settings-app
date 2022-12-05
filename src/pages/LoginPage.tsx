@@ -9,8 +9,8 @@ const LoginPage = () => {
             SnelMelder instellingen
           </h1>
           <p className="mb-4">
-            Je kunt inloggen met je Microsoft account. Lukt het niet om in te
-            loggen? Neem dan contact op met ICT.
+            Je kunt inloggen met je werk account. Lukt het niet om in te loggen?
+            Neem dan contact op met ICT.
           </p>
           <SignInButton />
         </div>
