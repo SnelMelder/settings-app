@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Panel,
   TextField,
@@ -9,7 +9,7 @@ import {
 } from "@fluentui/react";
 import PeoplePicker from "./PeoplePicker";
 import { Person } from "../models/Person";
-import { ProjectCreateDto } from "../services/ProjectService";
+import { ProjectCreateDto, ProjectUpdateDto } from "../services/ProjectService";
 import { Project } from "../models/Project";
 
 type CreateProps = {
@@ -19,13 +19,14 @@ type CreateProps = {
 
 type UpdateProps = {
   mode: "update";
-  onSave: (project: Project) => Promise<Project>;
+  onSave: (project: ProjectUpdateDto) => Promise<void>;
 };
 
 type DefaultProps = {
   isOpen: boolean;
   dismissPanel: () => void;
   contractors: Person[];
+  project?: Project | null;
 };
 
 type Props = (CreateProps | UpdateProps) & DefaultProps;
@@ -36,9 +37,17 @@ const ProjectPanel = ({
   contractors,
   onSave,
   mode,
+  project,
 }: Props) => {
   const [name, setName] = useState<string>("");
   const [selectedContractors, setSelectedContractors] = useState<Person[]>([]);
+
+  useEffect(() => {
+    if (!project) return;
+
+    setName(project.name);
+    setSelectedContractors(project.contractors);
+  }, [project]);
 
   function close() {
     resetInputFields();
@@ -77,7 +86,15 @@ const ProjectPanel = ({
         contractorIDs: selectedContractors.map((contractor) => contractor.key),
       });
     } else {
-      // TODO
+      if (!project) {
+        throw new Error("Project should be defined, because mode === update");
+      }
+
+      onSave({
+        id: project.key,
+        name,
+        contractorIDs: selectedContractors.map((contractor) => contractor.key),
+      });
     }
 
     close();
@@ -126,6 +143,7 @@ const ProjectPanel = ({
         <PeoplePicker
           onChange={updateSelectedContractors}
           people={contractors}
+          selectedPeople={selectedContractors}
         />
       </div>
     </Panel>
