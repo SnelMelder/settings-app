@@ -13,7 +13,13 @@ export const msalConfig = {
 
 // Add scopes here for ID token to be used at Microsoft identity platform endpoints.
 export const loginRequest = {
-  scopes: ["User.Read"],
+  scopes: [
+    "api://snelmelder/Locations.Create",
+    "api://snelmelder/Locations.Read",
+    "api://snelmelder/Locations.Update",
+    "api://snelmelder/Locations.Delete",
+    "api://snelmelder/Users.Contractors.Read",
+  ],
 };
 
 // Add the endpoints here for Microsoft Graph API services you'd like to use.

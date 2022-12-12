@@ -83,7 +83,7 @@ const ProjectPanel = ({
       console.log("Mode === create");
       onSave({
         name,
-        contractorIDs: selectedContractors.map((contractor) => contractor.key),
+        contractors: selectedContractors.map((contractor) => contractor.key),
       });
     } else {
       if (!project) {
@@ -91,9 +91,9 @@ const ProjectPanel = ({
       }
 
       onSave({
-        id: project.key,
+        _id: project.key,
         name,
-        contractorIDs: selectedContractors.map((contractor) => contractor.key),
+        contractors: selectedContractors.map((contractor) => contractor.key),
       });
     }
 

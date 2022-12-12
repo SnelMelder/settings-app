@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useMsal } from "@azure/msal-react";
 import { DefaultButton, IIconProps, PrimaryButton } from "@fluentui/react";
 import { useBoolean } from "@fluentui/react-hooks";
 import ProjectPanel from "../components/ProjectPanel";
@@ -15,12 +16,15 @@ import {
   updateProject,
 } from "../services/ProjectService";
 import { getAllContractors } from "../services/PeopleService";
+import { loginRequest } from "../../authConfig";
 
 const addIcon: IIconProps = { iconName: "Add" };
 const trashIcon: IIconProps = { iconName: "Delete" };
 const penIcon: IIconProps = { iconName: "PenWorkspace" };
 
 const HomePage = () => {
+  const { instance, accounts } = useMsal();
+
   const [projects, setProjects] = useState<Project[]>([]);
   const [contractors, setContractors] = useState<Person[]>([]);
   const [
@@ -34,26 +38,47 @@ const HomePage = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
-    getAllProjects().then((result) => setProjects(result));
-    getAllContractors().then((result) => setContractors(result));
+    getToken()
+      .then((token) => getAllContractors(token))
+      .then((contractors) => setContractors(contractors));
+
+    getToken()
+      .then((token) => getAllProjects(token))
+      .then((projects) => setProjects(projects));
   }, []);
+
+  async function getToken() {
+    const request = {
+      ...loginRequest,
+      account: accounts[0],
+    };
+
+    return instance
+      .acquireTokenSilent(request)
+      .then((response) => response.accessToken);
+  }
 
   async function projectCreateHandler(dto: ProjectCreateDto) {
     try {
-      const newProject = await createProject(dto);
-      setProjects((current) => [...current, newProject]);
+      getToken()
+        .then((token) => createProject(dto, token))
+        .then((newProject) =>
+          setProjects((current) => [...current, newProject])
+        );
     } catch (e) {
       console.log(e);
     }
   }
 
   async function projectUpdateHandler(dto: ProjectUpdateDto) {
-    console.log("project update handler");
-    const project = await updateProject(dto);
-    setProjects((current) => [
-      ...current.filter((item) => item.key !== project.key),
-      project,
-    ]);
+    getToken()
+      .then((token) => updateProject(dto, token))
+      .then((updatedProject) =>
+        setProjects((current) => [
+          ...current.filter((item) => item.key !== updatedProject.key),
+          updatedProject,
+        ])
+      );
   }
 
   function projectSelectHandler(project: Project | null) {
@@ -70,11 +95,14 @@ const HomePage = () => {
     }
 
     try {
-      await deleteProject(selectedProject.key);
-      setProjects((current) =>
-        current.filter((project) => project.key !== selectedProject.key)
-      );
-      setSelectedProject(null);
+      getToken()
+        .then((token) => deleteProject(selectedProject.key, token))
+        .then(() =>
+          setProjects((current) =>
+            current.filter((project) => project.key !== selectedProject.key)
+          )
+        )
+        .then(() => setSelectedProject(null));
     } catch (e) {
       console.log(e);
     }
