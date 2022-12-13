@@ -3,14 +3,14 @@ import {
   UnauthenticatedTemplate,
 } from "@azure/msal-react";
 
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
+import ProjectsPage from "./features/projects/ProjectsPage";
+import LoginPage from "./features/auth/LoginPage";
 
 function App() {
   return (
     <>
       <AuthenticatedTemplate>
-        <HomePage />
+        <ProjectsPage />
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
         <LoginPage />
