@@ -7,10 +7,10 @@ import {
   DefaultButton,
   IPersonaProps,
 } from "@fluentui/react";
-import PeoplePicker from "../../components/PeoplePicker";
-import { Person } from "../../models/Person";
-import { Project } from "../../models/Project";
-import PanelFooter from "../../components/PanelFooter";
+import PeoplePicker from "../contractors/PeoplePicker";
+import { Contractor } from "../contractors/Contractor";
+import { Project } from "./Project";
+import PanelFooter from "../../common/PanelFooter";
 import { useUpdateProjectMutation } from "./projectsSlice";
 
 type Props = {
@@ -21,7 +21,9 @@ type Props = {
 
 const EditProjectPanel = ({ isOpen, dismissPanel, project }: Props) => {
   const [name, setName] = useState<string>("");
-  const [selectedContractors, setSelectedContractors] = useState<Person[]>([]);
+  const [selectedContractors, setSelectedContractors] = useState<Contractor[]>(
+    []
+  );
 
   const [updateProject] = useUpdateProjectMutation();
 
@@ -51,7 +53,7 @@ const EditProjectPanel = ({ isOpen, dismissPanel, project }: Props) => {
   }
 
   function updateSelectedContractors(items?: IPersonaProps[] | undefined) {
-    setSelectedContractors(items as Person[]);
+    setSelectedContractors(items as Contractor[]);
   }
 
   const isValidState = name.length > 0 && selectedContractors.length > 0;

@@ -1,4 +1,4 @@
-import { Project } from "../../models/Project";
+import { Project } from "./Project";
 import { apiSlice } from "../api/apiSlice";
 
 interface ProjectReadDto {

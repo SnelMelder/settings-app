@@ -7,7 +7,7 @@ import {
   Selection,
   Shimmer,
 } from "@fluentui/react";
-import { Project } from "../../models/Project";
+import { Project } from "./Project";
 import { useGetProjectsQuery } from "./projectsSlice";
 import ContractorsFacepile from "../contractors/ContractorsFacepile";
 

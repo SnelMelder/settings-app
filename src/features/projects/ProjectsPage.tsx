@@ -2,9 +2,9 @@ import { useState } from "react";
 import { DefaultButton, IIconProps, PrimaryButton } from "@fluentui/react";
 import { useBoolean } from "@fluentui/react-hooks";
 import ProjectPanel from "./NewProjectPanel";
-import TopBar from "../../components/TopBar";
+import TopBar from "../../common/TopBar";
 import ProjectList from "./ProjectList";
-import { Project } from "../../models/Project";
+import { Project } from "./Project";
 import { useDeleteProjectMutation } from "./projectsSlice";
 
 const addIcon: IIconProps = { iconName: "Add" };

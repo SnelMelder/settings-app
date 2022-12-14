@@ -1,5 +1,5 @@
 import { ShimmerCircle, Facepile } from "@fluentui/react";
-import { Project } from "../../models/Project";
+import { Project } from "../projects/Project";
 import { useGetContractorsQuery } from "./contractorsSlice";
 
 interface Props {

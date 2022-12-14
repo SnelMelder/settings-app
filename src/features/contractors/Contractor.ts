@@ -1,6 +1,6 @@
 import { IPersona } from "@fluentui/react";
 
-export interface Person extends IPersona {
+export interface Contractor extends IPersona {
   key: string;
   imageUrl?: string;
   imageInitials: string;

@@ -1,4 +1,4 @@
-import { Person } from "../../models/Person";
+import { Contractor } from "./Contractor";
 import { apiSlice } from "../api/apiSlice";
 
 interface PersonReadDto {
@@ -9,7 +9,7 @@ interface PersonReadDto {
 
 export const contractorsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getContractors: builder.query<Person[], void>({
+    getContractors: builder.query<Contractor[], void>({
       query: () => "/users/contractors",
       transformResponse: (rawResult: PersonReadDto[]) =>
         rawResult.map((item) => ({

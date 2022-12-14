@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Panel, TextField, Label, IPersona, Shimmer } from "@fluentui/react";
-import PeoplePicker from "../../components/PeoplePicker";
-import { Person } from "../../models/Person";
+import PeoplePicker from "../contractors/PeoplePicker";
+import { Contractor } from "../contractors/Contractor";
 import { useAddNewProjectMutation } from "./projectsSlice";
 import { useGetContractorsQuery } from "../contractors/contractorsSlice";
-import PanelFooter from "../../components/PanelFooter";
+import PanelFooter from "../../common/PanelFooter";
 
 type Props = {
   isOpen: boolean;
@@ -13,7 +13,9 @@ type Props = {
 
 const NewProjectPanel = ({ isOpen, dismissPanel }: Props) => {
   const [name, setName] = useState<string>("");
-  const [selectedContractors, setSelectedContractors] = useState<Person[]>([]);
+  const [selectedContractors, setSelectedContractors] = useState<Contractor[]>(
+    []
+  );
 
   const [addNewProject, { isSuccess, isLoading }] = useAddNewProjectMutation();
   const { data: contractors } = useGetContractorsQuery();
@@ -29,7 +31,7 @@ const NewProjectPanel = ({ isOpen, dismissPanel }: Props) => {
     setName(newName || "");
 
   const peoplePickerChangeHandler = (items?: IPersona[]) =>
-    setSelectedContractors(items as Person[]);
+    setSelectedContractors(items as Contractor[]);
 
   const isValidState = name.length > 0 && selectedContractors.length > 0;
 
