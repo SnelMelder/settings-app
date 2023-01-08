@@ -1,5 +1,6 @@
 import { Contractor } from "./Contractor";
 import { apiSlice } from "../api/apiSlice";
+import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 
 interface PersonReadDto {
   id: string;

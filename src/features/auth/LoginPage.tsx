@@ -1,4 +1,4 @@
-import SignInButton from "../api/SignInButton";
+import SignInButton from "./SignInButton";
 
 const LoginPage = () => {
   return (

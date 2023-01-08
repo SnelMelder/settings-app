@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { DefaultButton, IIconProps, PrimaryButton } from "@fluentui/react";
 import { useBoolean } from "@fluentui/react-hooks";
-import ProjectPanel from "./NewProjectPanel";
-import TopBar from "../../common/TopBar";
+import NewProjectPanel from "./NewProjectPanel";
+import EditProjectPanel from "./EditProjectPanel";
+import TopBar from "../navigation/TopBar";
 import ProjectList from "./ProjectList";
 import { Project } from "./Project";
 import { useDeleteProjectMutation } from "./projectsSlice";
@@ -26,32 +27,27 @@ const ProjectsPage = () => {
 
   const [deleteProject] = useDeleteProjectMutation();
 
-  const createBtnClickHandler = () => openCreatePanel();
-  const updateBtnClickHandler = () => openUpdatePanel();
+  // const createBtnClickHandler = () => openCreatePanel();
+  // const updateBtnClickHandler = () => openUpdatePanel();
   const deleteBtnClickHandler = () => deleteProject(selectedProject!);
 
-  const projectSelectHandler = (p: Project | null) => setSelectedProject(p);
+  const projectSelectHandler = (project: Project | null) =>
+    setSelectedProject(project);
 
   return (
     <>
       <TopBar />
 
-      <ProjectPanel
+      {/* <NewProjectPanel
         isOpen={createPanelIsOpen}
         dismissPanel={closeCreatePanel}
-        contractors={contractors}
-        mode="create"
-        onSave={projectCreateHandler}
       />
 
-      <ProjectPanel
+      <EditProjectPanel
         isOpen={updatePanelIsOpen}
         dismissPanel={closeUpdatePanel}
-        contractors={contractors}
-        mode="update"
-        onSave={projectUpdateHandler}
         project={selectedProject}
-      />
+      /> */}
 
       <div className="max-w-5xl mx-auto p-4 my-8">
         <div className="flex flex-row justify-between">

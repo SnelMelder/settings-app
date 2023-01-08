@@ -6,6 +6,8 @@ import {
   SelectionMode,
   Selection,
   Shimmer,
+  MessageBar,
+  MessageBarType,
 } from "@fluentui/react";
 import { Project } from "./Project";
 import { useGetProjectsQuery } from "./projectsSlice";
@@ -16,7 +18,7 @@ interface Props {
 }
 
 const ProjectList = ({ onSelect }: Props) => {
-  const { isSuccess, data, isLoading } = useGetProjectsQuery();
+  const { data, isLoading, isError, isUninitialized } = useGetProjectsQuery();
 
   function renderFacePile(project: Project) {
     return <ContractorsFacepile project={project} />;
@@ -45,21 +47,25 @@ const ProjectList = ({ onSelect }: Props) => {
     []
   );
 
-  if (isLoading) {
+  if (isLoading || isUninitialized) {
     return (
-      <>
-        <Shimmer />
-        <Shimmer width="75%" />
-        <Shimmer width="50%" />
-      </>
+      <div className="mt-4">
+        <Shimmer className="mt-3" />
+        <Shimmer className="mt-3" width="75%" />
+        <Shimmer className="mt-3" width="50%" />
+      </div>
     );
   }
 
-  if (isSuccess) {
-    return <DetailsList items={data} columns={columns} selection={selection} />;
+  if (isError) {
+    return (
+      <MessageBar className="mt-4" messageBarType={MessageBarType.error}>
+        Er ging iets mis met het ophalen van de projecten.
+      </MessageBar>
+    );
   }
 
-  return <p>Unknown error...</p>;
+  return <DetailsList items={data} columns={columns} selection={selection} />;
 };
 
 export default ProjectList;
