@@ -6,12 +6,16 @@ import {
   PrimaryButton,
   DefaultButton,
   IPersonaProps,
+  MessageBar,
+  MessageBarType,
 } from "@fluentui/react";
-import PeoplePicker from "../contractors/PeoplePicker";
+import PeoplePicker from "../../common/PeoplePicker";
 import { Contractor } from "../contractors/Contractor";
 import { Project } from "./Project";
 import PanelFooter from "../../common/PanelFooter";
 import { useUpdateProjectMutation } from "./projectsSlice";
+import { useGetContractorsQuery } from "../contractors/contractorsSlice";
+import ContractorsPicker from "../contractors/ContractorsPicker";
 
 type Props = {
   isOpen: boolean;
@@ -20,46 +24,65 @@ type Props = {
 };
 
 const EditProjectPanel = ({ isOpen, dismissPanel, project }: Props) => {
+  if (!project) return <></>;
+
   const [name, setName] = useState<string>("");
-  const [selectedContractors, setSelectedContractors] = useState<Contractor[]>(
+  const [selectedContractorIDs, setSelectedContractorIDs] = useState<string[]>(
     []
   );
 
-  const [updateProject] = useUpdateProjectMutation();
+  const [updateProject, { isSuccess, isLoading, isError }] =
+    useUpdateProjectMutation();
 
   useEffect(() => {
-    if (!project) return;
+    close();
+  }, [isSuccess]);
 
+  useEffect(() => {
     setName(project.name);
-    setSelectedContractors(project.contractors);
-  }, [project]);
+    setSelectedContractorIDs(project.contractorIDs);
+  }, [project, isOpen]);
 
-  useEffect(() => {}, [isSuccess]);
+  function nameInputChangeHandler(_: any, newName?: string) {
+    setName(newName || "");
+  }
 
-  function close() {
+  function contractorsPickerChangeHandler(contractorIDs: string[]) {
+    console.log(contractorIDs);
+    setSelectedContractorIDs(contractorIDs);
+  }
+
+  const close = () => {
     resetInputFields();
     dismissPanel();
-  }
+  };
 
-  function updateName(
-    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-    newName?: string
-  ) {
-    if (newName) {
-      setName(newName);
-    } else {
-      setName("");
-    }
-  }
+  const resetInputFields = () => {
+    setName("");
+    setSelectedContractorIDs([]);
+  };
 
-  function updateSelectedContractors(items?: IPersonaProps[] | undefined) {
-    setSelectedContractors(items as Contractor[]);
-  }
+  const isValidState = name.length > 0 && selectedContractorIDs.length > 0;
 
-  const isValidState = name.length > 0 && selectedContractors.length > 0;
+  const cancelBtnClickHandler = () => close();
 
-  const onRenderFooterContent = (
-    <PanelFooter onSave={} onCancel={} isLoading={} canSave={isValidState} />
+  const saveBtnClickHandler = () => {
+    if (isLoading) return;
+
+    updateProject({
+      _id: project.key,
+      name,
+      contractors: selectedContractorIDs,
+    });
+  };
+
+  const onRenderFooterContent = () => (
+    <PanelFooter
+      onSave={saveBtnClickHandler}
+      onCancel={cancelBtnClickHandler}
+      isLoading={isLoading}
+      canSave={isValidState}
+    />
   );
 
   return (
@@ -70,18 +93,22 @@ const EditProjectPanel = ({ isOpen, dismissPanel, project }: Props) => {
       onRenderFooterContent={onRenderFooterContent}
       isFooterAtBottom={true}
     >
+      {isError && (
+        <MessageBar className="mt-2" messageBarType={MessageBarType.error}>
+          Er ging iets mis bij het opslaan.
+        </MessageBar>
+      )}
       <TextField
         label="Projectnaam: "
         required
         value={name}
-        onChange={updateName}
+        onChange={nameInputChangeHandler}
       />
-      <div className="mt-1">
+      <div className="mt-1 mb-2">
         <Label>Uitvoerder(s):</Label>
-        <PeoplePicker
-          onChange={updateSelectedContractors}
-          people={contractors}
-          selectedPeople={selectedContractors}
+        <ContractorsPicker
+          onChange={contractorsPickerChangeHandler}
+          selectedContractorsIDs={selectedContractorIDs}
         />
       </div>
     </Panel>

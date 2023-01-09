@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Panel, TextField, Label, IPersona, Shimmer } from "@fluentui/react";
-import PeoplePicker from "../contractors/PeoplePicker";
 import { Contractor } from "../contractors/Contractor";
 import { useAddNewProjectMutation } from "./projectsSlice";
 import { useGetContractorsQuery } from "../contractors/contractorsSlice";
 import PanelFooter from "../../common/PanelFooter";
+import ContractorsPicker from "../contractors/ContractorsPicker";
 
 type Props = {
   isOpen: boolean;
@@ -13,7 +13,7 @@ type Props = {
 
 const NewProjectPanel = ({ isOpen, dismissPanel }: Props) => {
   const [name, setName] = useState<string>("");
-  const [selectedContractors, setSelectedContractors] = useState<Contractor[]>(
+  const [selectedContractorIDs, setSelectedContractorIDs] = useState<string[]>(
     []
   );
 
@@ -22,27 +22,41 @@ const NewProjectPanel = ({ isOpen, dismissPanel }: Props) => {
 
   useEffect(() => {
     if (isSuccess) {
-      dismissPanel();
+      close();
     }
   }, [isSuccess]);
+
+  const close = () => {
+    resetInputFields();
+    dismissPanel();
+  };
 
   // Form input
   const nameChangeHandler = (_: any, newName?: string) =>
     setName(newName || "");
 
-  const peoplePickerChangeHandler = (items?: IPersona[]) =>
-    setSelectedContractors(items as Contractor[]);
+  const resetInputFields = () => {
+    setName("");
+    setSelectedContractorIDs([]);
+  };
 
-  const isValidState = name.length > 0 && selectedContractors.length > 0;
+  function contractorsPickerChangeHandler(contractorIDs: string[]) {
+    setSelectedContractorIDs(contractorIDs);
+  }
+
+  const isValidState = name.length > 0 && selectedContractorIDs.length > 0;
 
   // Actions
-  const closeBtnClickHandler = () => dismissPanel();
+  const closeBtnClickHandler = () => close();
 
-  const saveBtnClickHandler = () =>
+  const saveBtnClickHandler = () => {
+    if (isLoading) return;
+
     addNewProject({
       name,
-      contractors: selectedContractors.map((item) => item.key),
+      contractors: selectedContractorIDs,
     });
+  };
 
   const onRenderFooterContent = () => (
     <PanelFooter
@@ -71,10 +85,9 @@ const NewProjectPanel = ({ isOpen, dismissPanel }: Props) => {
       <div className="mt-1">
         <Label>Uitvoerder(s):</Label>
         {contractors ? (
-          <PeoplePicker
-            onChange={peoplePickerChangeHandler}
-            people={contractors}
-            selectedPeople={selectedContractors}
+          <ContractorsPicker
+            onChange={contractorsPickerChangeHandler}
+            selectedContractorsIDs={selectedContractorIDs}
           />
         ) : (
           <Shimmer />

@@ -27,8 +27,8 @@ const ProjectsPage = () => {
 
   const [deleteProject] = useDeleteProjectMutation();
 
-  // const createBtnClickHandler = () => openCreatePanel();
-  // const updateBtnClickHandler = () => openUpdatePanel();
+  const createBtnClickHandler = () => openCreatePanel();
+  const updateBtnClickHandler = () => openUpdatePanel();
   const deleteBtnClickHandler = () => deleteProject(selectedProject!);
 
   const projectSelectHandler = (project: Project | null) =>
@@ -38,7 +38,7 @@ const ProjectsPage = () => {
     <>
       <TopBar />
 
-      {/* <NewProjectPanel
+      <NewProjectPanel
         isOpen={createPanelIsOpen}
         dismissPanel={closeCreatePanel}
       />
@@ -47,13 +47,13 @@ const ProjectsPage = () => {
         isOpen={updatePanelIsOpen}
         dismissPanel={closeUpdatePanel}
         project={selectedProject}
-      /> */}
+      />
 
       <div className="max-w-5xl mx-auto p-4 my-8">
         <div className="flex flex-row justify-between">
           <h1 className="text-3xl">Projecten</h1>
           <PrimaryButton
-            onClick={openCreatePanel}
+            onClick={createBtnClickHandler}
             iconProps={addIcon}
             text="Nieuw Project"
             type="none"
@@ -73,7 +73,7 @@ const ProjectsPage = () => {
             disabled={!selectedProject}
             iconProps={penIcon}
             className="ml-4"
-            onClick={openUpdatePanel}
+            onClick={updateBtnClickHandler}
           />
         </div>
 

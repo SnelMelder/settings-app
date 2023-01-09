@@ -40,7 +40,7 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
     }),
     updateProject: builder.mutation({
       query: (project: ProjectUpdateDto) => ({
-        url: `locations/${project._id}`,
+        url: `locations`,
         method: "PUT",
         body: project,
       }),
