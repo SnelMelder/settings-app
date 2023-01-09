@@ -1,6 +1,6 @@
 import { PrimaryButton } from "@fluentui/react";
 import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "../../authConfig";
+import { loginRequest } from "./authConfig";
 
 /**
  * Renders a button which, when selected, will redirect the page to the login prompt

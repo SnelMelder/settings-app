@@ -1,4 +1,4 @@
-import { SignOutButton } from "./SignOutButton";
+import { SignOutButton } from "../auth/SignOutButton";
 
 const TopBar = () => {
   return (

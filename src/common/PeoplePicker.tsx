@@ -63,7 +63,7 @@ export const PeoplePicker = ({ people, onChange, selectedPeople }: Props) => {
   return (
     <NormalPeoplePicker
       onResolveSuggestions={onFilterChanged}
-      onEmptyInputFocus={getPeopleWithoutDuplicates}
+      onEmptyResolveSuggestions={getPeopleWithoutDuplicates}
       getTextFromItem={getTextFromItem}
       pickerSuggestionsProps={suggestionProps}
       className={"ms-PeoplePicker"}
