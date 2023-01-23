@@ -1,8 +1,8 @@
-# Snelmelder Settings Panel
+# Snelmelder settings panel
 
 ## Description
 
-When a user creates a new report in the Snelmelder app, we want to know which project (location + contractors) the report belongs to, in order to inform the right people. The locations and contractors can change. Therefore, we need a way to configure these. The Snelmelder Settings Panel is used for this. It allows a user to perform CRUD operations on projects.
+When a user creates a new report in the Snelmelder app, we want to know which project (location + contractors) the report belongs to, in order to inform the right people. The locations and contractors can change. Therefore, we need a way to configure these. The Snelmelder settings panel is used for this. It allows a user to perform CRUD operations on projects.
 
 ## Technologies
 
