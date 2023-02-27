@@ -1,7 +1,7 @@
 export const apiScopes = [
-  "api://snelmelder/Locations.Create",
-  "api://snelmelder/Locations.Read",
-  "api://snelmelder/Locations.Update",
-  "api://snelmelder/Locations.Delete",
-  "api://snelmelder/Users.Contractors.Read",
+  "api://snelmelder/locations:create",
+  "api://snelmelder/locations:read",
+  "api://snelmelder/locations:update",
+  "api://snelmelder/locations:delete",
+  "api://snelmelder/users:read",
 ];
