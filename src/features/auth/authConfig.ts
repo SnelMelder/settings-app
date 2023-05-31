@@ -2,9 +2,8 @@ import { apiScopes } from "../api/apiScopes";
 
 export const msalConfig = {
   auth: {
-    clientId: "d36a95ca-b349-405a-97ed-305831f4c8d2",
-    authority:
-      "https://login.microsoftonline.com/b0ad87a1-0f53-4ca9-a2f2-a0e1b926e061",
+    clientId: import.meta.env.VITE_CLIENT_ID,
+    authority: import.meta.env.VITE_AUTHORITY,
     redirectUri: import.meta.env.VITE_REDIRECT_URI,
   },
   cache: {
